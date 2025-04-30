@@ -1,28 +1,8 @@
 import tkinter as tk
 from tkinter import messagebox
 
-window = tk.Tk()
-window.title('Крестики-нолики')
-window.geometry('318x450')   # размер окна приложения
 
-# Настраиваем строки и столбцы для центрирования
-window.grid_rowconfigure(0, weight=1)
-window.grid_columnconfigure(0, weight=1)
-
-frame = tk.Frame(window, bg='AntiqueWhite3', width=318, height=500)  # создаем фрэйм
-frame.grid(row=0, column=0, sticky='nsew')  # Используем grid для центрирования
-
-# Добавляем метку
-text1 = tk.Label(frame, text='Выбирите: Х или О', font=('Arial', 16), bg='AntiqueWhite3')
-text1.grid(row=0, column=0, columnspan=3, pady=10)  # Размещаем метку в верхней части фрейма
-
-# Добавляем текстовое поле ввода
-task_entry = tk.Entry(frame, font=('Arial', 12))
-task_entry.grid(row=1, column=0, columnspan=3, pady=5)  # Размещаем текстовое поле под меткой
-
-current_player = 'X'  # устанавливаем текущего игрока
-buttons = []  # список для кнопок
-
+game_over = 0 # счетчик нажатий на кнопку мыши  для вычисления окончания игры
 def check_winer():
     for i in range(3):
         if buttons[i][0]['text'] == buttons[i][1]['text'] == buttons[i][2]['text'] != '':  # перебор строк
@@ -40,10 +20,8 @@ def clear():
         for button in row:
             button['text'] = ''
 
-clear_button = tk.Button(frame, bg='AntiqueWhite2', text='Очистить', command=clear) # ставим кнопку "Очистить"
-clear_button.grid(row=3, column=0, columnspan=3, pady=55)  # Используем grid для кнопки "Очистить"
 
-game_over = 0 # счетчик нажатий на кнопку мыши  для вычисления окончания игры
+
 def on_click(row, col):  #  нажатие кнопки мыши
     global game_over
     global current_player
@@ -57,6 +35,52 @@ def on_click(row, col):  #  нажатие кнопки мыши
         if game_over == 9:  # если было 9 нажатий игра заново, - ничья
             clear()
     current_player = 'O' if current_player == 'X' else 'X' # меняются игроки
+
+def show_choice():
+    selected_O_X = choice_var.get()
+    messagebox.showinfo("Выбранный цвет", f"Вы выбрали: {selected_O_X}")
+
+
+window = tk.Tk()
+window.title('Крестики-нолики')
+window.geometry('318x550')   # размер окна приложения
+
+# Настраиваем строки и столбцы для центрирования
+window.grid_rowconfigure(0, weight=1)
+window.grid_columnconfigure(0, weight=1)
+
+frame = tk.Frame(window, bg='AntiqueWhite3', width=318, height=500)  # создаем фрэйм
+frame.grid(row=0, column=0, sticky='nsew')  # Используем grid для центрирования
+
+# Добавляем метку
+text1 = tk.Label(frame, text='Выбирите: Х или О', font=('Arial', 16), bg='AntiqueWhite3')
+text1.grid(row=0, column=0, columnspan=3, pady=10)  # Размещаем метку в верхней части фрейма
+
+# Добавляем текстовое поле ввода
+task_entry = tk.Entry(frame, font=('Arial', 12))
+task_entry.grid(row=1, column=0, columnspan=3, pady=5)  # Размещаем текстовое поле под меткой
+
+
+choice_var = tk.StringVar(value="X")
+# Создаем радиокнопки для выбора цвета
+choice_label = tk.Label(frame, text="Выберите чем будете играть:")
+choice_label.grid(row=11, column=0, columnspan=3, pady=5)  # Используем grid для размещения метки
+
+choices = ["X", "O"]
+for choice in choices:
+    radio = tk.Radiobutton(frame, text=choice, variable=choice_var, value=choice, command=show_choice)
+    #radio.pack(anchor=tk.W)
+    radio.grid(row=12, column=0, columnspan=3, pady=5)  #
+
+
+# task_entry1 = tk.Radiobutton(frame, font=('Arial', 12))
+# task_entry1.grid(row=12, column=0, columnspan=3, pady=5)  # Размещаем текстовое поле под меткой
+
+current_player = 'X'  # устанавливаем текущего игрока
+buttons = []  # список для кнопок
+
+clear_button = tk.Button(frame, bg='AntiqueWhite2', text='Очистить', command=clear) # ставим кнопку "Очистить"
+clear_button.grid(row=3, column=0, columnspan=3, pady=55)  # Используем grid для кнопки "Очистить"
 
 for i in range(3):  # строим поле пустых кнопок
     row = [] # список строк из кнопок
