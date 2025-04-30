@@ -37,7 +37,7 @@ def clear():
 clear_button = tk.Button(frame, bg='AntiqueWhite2', text='Очистить', command=clear) # ставим кнопку "Очистить"
 clear_button.grid(row=3, column=0, columnspan=3, pady=55)  # Используем grid для кнопки "Очистить"
 
-game_over = 0 # счетчик нажатий мыши на кнопки для окончания игры
+game_over = 0 # счетчик нажатий на кнопку мыши  для вычисления окончания игры
 def on_click(row, col):  #  нажатие кнопки мыши
     global game_over
     global current_player
@@ -55,13 +55,13 @@ def on_click(row, col):  #  нажатие кнопки мыши
     current_player = 'O' if current_player == 'X' else 'X' # меняются игроки
 
 for i in range(3):  # строим поле пустых кнопок
-    row = []
+    row = [] # список строк из копок
     for j in range(3):
         btn = tk.Button(frame, text='', font=('Arial', 20), width=6, height=3, command=lambda r=i, c=j: on_click(r, c))
         btn.grid(row=i, column=j)
-        row.append(btn)
+        row.append(btn) # добавляем кнопку с строку кнопок
         # print(f'cодержимое стека: {btn['text']}')
 
-    buttons.append(row)
+    buttons.append(row) # добавляем строку кнопок а список кнопок, - столбцы
 
 window.mainloop()
