@@ -22,8 +22,8 @@ def check_winer(): # был ли случай победы
     return False  # не было совпадений, не было выигрышей
 
 def clear(): # очищение символов с кнопок, сброс
-    for row in buttons:
-        for button in row:
+    for row in buttons: # перебор строк в списке кнопоу
+        for button in row: # тавим на всех кнопках пустоту
             button['text'] = ''
     global game_over
     game_over = 0  # сброс счетчика нажатий, окончание игры
@@ -37,7 +37,7 @@ def on_click(row, col):  # нажатие кнопки мыши
     if current_player == '':
         messagebox.showinfo('Выберие игрока', f'Нужно вырать чем будете играть: нолик или крестик!')
 
-    if buttons[row][col]['text'] != '':  # если на преданой кнопке пусто
+    if buttons[row][col]['text'] != '':  # если на переданой кнопке пусто
         return  # обратно к вызывающему
     buttons[row][col]['text'] = current_player  # если символ на кнопке совпал с текущим игроком
     # print(f'game_over: {game_over} ')
